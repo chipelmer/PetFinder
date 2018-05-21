@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2037
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetFinder", "PetFinder\PetFinder.csproj", "{9FE0A6F9-1268-4027-B172-17CCBDE203DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetFinder", "PetFinder\PetFinder.csproj", "{9FE0A6F9-1268-4027-B172-17CCBDE203DD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Finder.Shared", "Finder.Shared\Finder.Shared.csproj", "{352D357D-13FA-4448-8678-00EFAB40051B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Finder.Repository", "Finder.Repository\Finder.Repository.csproj", "{4F509A42-23B9-41F9-9326-BEEF54F18256}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{9FE0A6F9-1268-4027-B172-17CCBDE203DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9FE0A6F9-1268-4027-B172-17CCBDE203DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9FE0A6F9-1268-4027-B172-17CCBDE203DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{352D357D-13FA-4448-8678-00EFAB40051B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{352D357D-13FA-4448-8678-00EFAB40051B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{352D357D-13FA-4448-8678-00EFAB40051B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{352D357D-13FA-4448-8678-00EFAB40051B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F509A42-23B9-41F9-9326-BEEF54F18256}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F509A42-23B9-41F9-9326-BEEF54F18256}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F509A42-23B9-41F9-9326-BEEF54F18256}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F509A42-23B9-41F9-9326-BEEF54F18256}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
