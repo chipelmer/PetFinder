@@ -3,6 +3,17 @@
     padding-bottom: 20px;
 }
 
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+.header {
+    margin: auto;
+    width: 75%;
+    text-align: center;
+}
+
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
 .body-content {
