@@ -17,14 +17,14 @@ namespace PetFinder.Controllers
 
         public IActionResult About()
         {
-            ViewData["Message"] = "Your application description page.";
+            ViewData["Message"] = "Connecting lost pets and owners.";
 
             return View();
         }
 
         public IActionResult Contact()
         {
-            ViewData["Message"] = "Your contact page.";
+            ViewData["Message"] = "Don't call us, we'll call you.";
 
             return View();
         }
