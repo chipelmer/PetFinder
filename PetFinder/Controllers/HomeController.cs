@@ -15,6 +15,11 @@ namespace PetFinder.Controllers
             return View();
         }
 
+        public IActionResult Find()
+        {
+            return View();
+        }
+
         public IActionResult About()
         {
             ViewData["Message"] = "Connecting lost pets and owners.";
