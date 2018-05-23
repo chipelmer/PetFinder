@@ -1,0 +1,58 @@
+﻿
+@{
+    ViewData["Title"] = "I lost my pet!";
+}
+
+<div class="header">
+    <h1>I lost my pet!</h1>
+</div>
+
+<div class="row">
+    <div class="header">
+        <img src="~/images/telescope.svg" width="150" />
+        <h4>Use this page to see if someone has found your pet.</h4>
+        <h4>If not, tell us about your pet in case someone finds it later.</h4>
+    </div>
+</div>
+
+@{
+    List<SelectListItem> petTypes = new List<SelectListItem>();
+    var testList = Test.TestList();
+    for (int i = 0; i < testList.GetLength(0); i++)
+    {
+        petTypes.Add(new SelectListItem { Text = testList[i, 0], Value = testList[i, 1] });
+    }
+}
+
+<table class="petQuestions">
+    <tr>
+        <th>Tell us about your lost pet:</th>
+    </tr>
+    <tr>
+        <td>Describe the lost pet:</td>
+        <td>
+            @Html.TextArea("Enter description here")
+            <br />(expand text box as needed)
+        </td>
+    </tr>
+    <tr>
+        <td>What type of pet is lost?</td>
+        <td>
+            @Html.DropDownList("Test", new SelectList(petTypes, "Value", "Text"))
+        </td>
+    </tr>
+    <tr>
+        <td>What size is the lost pet?</td>
+        <td>
+            @Html.DropDownList("Test", new SelectList(petTypes, "Value", "Text"))
+        </td>
+    </tr>
+</table>
+
+<br />
+
+<div class="row header">
+    <a class="btn btn-default" href="~/home/find">
+        <h4>I don't see my pet!</h4>
+    </a>
+</div>
