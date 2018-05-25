@@ -1,6 +1,5 @@
-﻿
-@{
-    ViewData["Title"] = "I lost my pet!";
+﻿@{
+    ViewBag.Title = "I lost my pet!";
 }
 
 <div class="header">
@@ -24,16 +23,9 @@
     }
 }
 
-<table class="petQuestions">
+<table>
     <tr>
         <th>Tell us about your lost pet:</th>
-    </tr>
-    <tr>
-        <td>Describe the lost pet:</td>
-        <td>
-            @Html.TextArea("Enter description here")
-            <br />(expand text box as needed)
-        </td>
     </tr>
     <tr>
         <td>What type of pet is lost?</td>

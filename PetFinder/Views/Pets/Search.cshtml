@@ -1,0 +1,53 @@
+﻿@{
+    ViewBag.Title = "Search";
+    ViewBag.Image = "";
+    ViewBag.HeaderText1 = "";
+    ViewBag.HeaderText2 = "";
+}
+
+<div class="header">
+    <h1>@ViewBag.Title</h1>
+</div>
+
+<div class="row">
+    <div class="header">
+        <img src=@ViewBag.Image width="150" />
+        <h4>@ViewBag.HeaderText1</h4>
+        <h4>@ViewBag.HeaderText2</h4>
+    </div>
+</div>
+
+@{
+    List<SelectListItem> petTypes = new List<SelectListItem>();
+    var testList = Test.TestList();
+    for (int i = 0; i < testList.GetLength(0); i++)
+    {
+        petTypes.Add(new SelectListItem { Text = testList[i, 0], Value = testList[i, 1] });
+    }
+}
+
+<table>
+    <tr>
+        <th>Tell us about this pet:</th>
+    </tr>
+    <tr>
+        <td>What type of pet is lost?</td>
+        <td>
+            @Html.DropDownList("Test", new SelectList(petTypes, "Value", "Text"))
+        </td>
+    </tr>
+    <tr>
+        <td>What size is the lost pet?</td>
+        <td>
+            @Html.DropDownList("Test", new SelectList(petTypes, "Value", "Text"))
+        </td>
+    </tr>
+</table>
+
+<br />
+
+<div class="row header">
+    <a class="btn btn-default" href="~/home/find">
+        <h4>I don't see this pet!</h4>
+    </a>
+</div>

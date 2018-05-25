@@ -8,19 +8,21 @@ namespace PetFinder.Controllers
     {
         public IActionResult Index() => View();
 
-        public IActionResult Find() => View();
+        //public IActionResult Find() => View();
 
-        public IActionResult Found() => View();
+        //public IActionResult Found() => View();
+
+        public IActionResult NewPet() => View();
 
         public IActionResult About()
         {
-            ViewData["Message"] = "Connecting lost pets and owners.";
+            ViewBag.Message = "Connecting lost pets and owners.";
             return View();
         }
 
         public IActionResult Contact()
         {
-            ViewData["Message"] = "Don't call us, we'll call you.";
+            ViewBag.Message = "Don't call us, we'll call you.";
             return View();
         }
 
