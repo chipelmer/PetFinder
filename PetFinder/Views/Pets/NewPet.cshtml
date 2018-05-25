@@ -1,0 +1,63 @@
+﻿@{
+    ViewBag.Title = "New Pet";
+}
+
+<div class="header">
+    <h1>I have a new pet to tell PetFinder about...</h1>
+</div>
+
+<div class="row">
+    <div class="header">
+        <img src="~/images/information.svg" width="150" />
+        <h4>Use this page to tell us about a pet we haven't heard about.</h4>
+    </div>
+</div>
+
+@{
+    List<SelectListItem> petTypes = new List<SelectListItem>();
+    var testList = Test.TestList();
+    for (int i = 0; i < testList.GetLength(0); i++)
+    {
+        petTypes.Add(new SelectListItem { Text = testList[i, 0], Value = testList[i, 1] });
+    }
+}
+
+<table>
+    <tr>
+        <th>Tell us about this pet:</th>
+    </tr>
+    <tr>
+        <td>What type of pet is it?</td>
+        <td>
+            @Html.DropDownList("Test", new SelectList(petTypes, "Value", "Text"))
+        </td>
+    </tr>
+    <tr>
+        <td>What size is the pet?</td>
+        <td>
+            @Html.DropDownList("Test", new SelectList(petTypes, "Value", "Text"))
+        </td>
+    </tr>
+    <tr>
+        <td valign="top">Describe the lost pet:</td>
+        <td>
+            @Html.TextArea("Enter description here")
+            <br />(expand text box as needed)
+        </td>
+    </tr>
+    <tr>
+        <td valign="top">Where was this pet?</td>
+        <td>
+            @Html.TextArea("Enter pet's location here")
+            <br />(expand text box as needed)
+        </td>
+    </tr>
+</table>
+
+<br />
+
+<div class="row header">
+    <a class="btn btn-default" href="~/home/find">
+        <h4>Post!</h4>
+    </a>
+</div>

@@ -249,7 +249,8 @@ $.extend( $.validator, {
 		errorLabelContainer: $( [] ),
 		onsubmit: true,
 		ignore: ":hidden",
-		ignoreTitle: false,
+        ignore
+            : false,
 		onfocusin: function( element ) {
 			this.lastActive = element;
 

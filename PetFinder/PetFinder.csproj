@@ -13,4 +13,9 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Finder.Repository\Finder.Repository.csproj" />
+    <ProjectReference Include="..\Finder.Shared\Finder.Shared.csproj" />
+  </ItemGroup>
+
 </Project>
