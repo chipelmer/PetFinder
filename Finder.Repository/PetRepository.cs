@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Dapper;
 using System.Data;
 using System.Threading.Tasks;
+using Finder.Shared;
 
 namespace Finder.Repository
 {
@@ -20,7 +21,7 @@ namespace Finder.Repository
             using (var conn = _conn)
             {
                 conn.Open();
-                return conn.Execute("INSERT INTO lostpets (PetDescription, Picture, DateLost, FinderContactNumber, DateFound, Type, PetSize) VALUES (@Type, @Description, @DateLost, @FindNumber, @DateFound, @Type, @Size);", pet);
+                return conn.Execute("INSERT INTO lostpets (PetDescription, Picture, DateLost, FinderContactNumber, DateFound, Type, PetSize) VALUES (@Description, @DateLost, @FindNumber, @DateFound, @Type, @Size);", pet);
             }
         }
 
@@ -51,21 +52,21 @@ namespace Finder.Repository
             }
         }
 
-        public async Task<IEnumerable<Pet>> GetPetSizes()
+        public async Task<IEnumerable<PetSize>> GetPetSizes()
         {
             using (var conn = _conn)
             {
                 conn.Open();
-                return await conn.QueryAsync<Pet>("SELECT PetSizeId, PetSize FROM petsizes WHERE PetSizeId = @SizeId, PetSize = @PetSize;");
+                return await conn.QueryAsync<PetSize>("SELECT PetSizeId, PetSize FROM petsizes;");
             }
         }
 
-        public async Task<IEnumerable<Pet>> GetPetTypes()
+        public async Task<IEnumerable<PetType>> GetPetTypes()
         {
             using (var conn = _conn)
             {
                 conn.Open();
-                return await conn.QueryAsync<Pet>("SELECT PetTypeId, PetType from pettypes WHERE PetTypeId = @TypeId, PetType = @PetType;");
+                return await conn.QueryAsync<PetType>("SELECT PetTypeId, PetType from pettypes;");
             }
         }
 
@@ -77,5 +78,7 @@ namespace Finder.Repository
                 return conn.Execute("UPDATE lostpets SET PetType = @Type, PetSize = @Size, Location = @Location, PetDescription = @Description, DatePetLost = @DateLost, DatePetFound = @DateFound, LostNumber = @LostNumber, FoundNumber = @FoundNumber WHERE LostPet.Id = @Id;", pet);
             }
         }
+
+
     }
 }
