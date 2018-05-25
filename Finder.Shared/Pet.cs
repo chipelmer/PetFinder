@@ -8,6 +8,7 @@ namespace Finder.Repository
     public class Pet
     {
         public int Id { get; set; }
+        public string HashedWord { get; set; }
         public PetType PetType { get; set; }
         public PetSize PetSize { get; set; }
         public string Location { get; set; }

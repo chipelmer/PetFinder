@@ -13,7 +13,6 @@ namespace Finder.Repository
         Task<Pet> GetPet(int id);
         Task<IEnumerable<PetSize>> GetPetSizes();
         Task<IEnumerable<PetType>> GetPetTypes();
-        IPasswordHasher GetPassword();
         int DeletePet(int id);
         int UpdatePet(Pet pet);
         int AddPet(Pet pet);

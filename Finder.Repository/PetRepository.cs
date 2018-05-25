@@ -21,7 +21,7 @@ namespace Finder.Repository
             using (var conn = _conn)
             {
                 conn.Open();
-                return conn.Execute("INSERT INTO lostpets (PetDescription, Picture, DateLost, FinderContactNumber, DateFound, Type, PetSize) VALUES (@Description, @DateLost, @FindNumber, @DateFound, @Type, @Size);", pet);
+                return conn.Execute("INSERT INTO lostpets (HashedWord, PetDescription, Picture, DateLost, FinderContactNumber, DateFound, Type, PetSize) VALUES (@HashedWord, @Description, @DateLost, @FindNumber, @DateFound, @Type, @Size);", pet);
             }
         }
 
