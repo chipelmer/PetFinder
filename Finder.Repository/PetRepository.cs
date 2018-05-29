@@ -30,43 +30,43 @@ namespace Finder.Repository
             using (var conn = _conn)
             {
                 conn.Open();
-                return conn.Execute("DELETE FROM lostpets WHERE lostpets.Id = @id;", new Pet { Id = id });
+                return conn.Execute("DELETE FROM lostpets WHERE lostpets.Id = @id;", new { id });
             }
         }
 
-        public async Task<Pet> GetPet(int id)
+        public Pet GetPet(int id)
         {
             using (var conn = _conn)
             {
                 conn.Open();
-                return await conn.QueryFirstAsync<Pet>("SELECT * FROM lostpets lp LEFT OUTER JOIN petsize ps ON lp.Id = ps.Id LEFT OUTER JOIN pettype pt ON pt.Id = lp.ID WHERE lp.Id = @id;", new Pet { Id = id });
+                return conn.QueryFirst<Pet>("SELECT * FROM lostpets lp LEFT OUTER JOIN petsize ps ON lp.Id = ps.Id LEFT OUTER JOIN pettype pt ON pt.Id = lp.ID WHERE lp.Id = @id;", new { id });
             }
         }
 
-        public async Task<IEnumerable<Pet>> SearchPets()
+        public IEnumerable<Pet> SearchPets()
         {
             using (var conn = _conn)
             {
                 conn.Open();
-                return await conn.QueryAsync<Pet>("SELECT * FROM lostpets lp LEFT OUTER JOIN petsize ps ON lp.PetSizesId = ps.PetSizesId LEFT OUTER JOIN pettype pt ON pt.PetTypeId = lp.PetTypeID;");
+                return conn.Query<Pet>("SELECT * FROM lostpets lp LEFT OUTER JOIN petsize ps ON lp.PetSizesId = ps.PetSizesId LEFT OUTER JOIN pettype pt ON pt.PetTypeId = lp.PetTypeID;");
             }
         }
 
-        public async Task<IEnumerable<PetSize>> GetPetSizes()
+        public IEnumerable<PetSize> GetPetSizes()
         {
             using (var conn = _conn)
             {
                 conn.Open();
-                return await conn.QueryAsync<PetSize>("SELECT PetSizeId, PetSize FROM petsizes;");
+                return conn.Query<PetSize>("SELECT PetSizeId, PetSize FROM petsizes;");
             }
         }
 
-        public async Task<IEnumerable<PetType>> GetPetTypes()
+        public IEnumerable<PetType> GetPetTypes()
         {
             using (var conn = _conn)
             {
                 conn.Open();
-                return await conn.QueryAsync<PetType>("SELECT PetTypeId, PetType from pettypes;");
+                return conn.Query<PetType>("SELECT PetTypeId, PetType from pettypes;");
             }
         }
 
@@ -78,7 +78,5 @@ namespace Finder.Repository
                 return conn.Execute("UPDATE lostpets SET PetType = @Type, PetSize = @Size, Location = @Location, PetDescription = @Description, DatePetLost = @DateLost, DatePetFound = @DateFound, LostNumber = @LostNumber, FoundNumber = @FoundNumber WHERE LostPet.Id = @Id;", pet);
             }
         }
-
-
     }
 }

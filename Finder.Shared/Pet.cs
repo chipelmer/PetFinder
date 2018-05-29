@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Finder.Shared;
 
-namespace Finder.Repository
+namespace Finder.Shared
 {
     public class Pet
     {
         public int Id { get; set; }
-        public string HashedWord { get; set; }
-        public PetType PetType { get; set; }
-        public PetSize PetSize { get; set; }
+        public PetType Type { get; set; }
+        public PetSize Size { get; set; }
         public string Location { get; set; }
         public string Description { get; set; }
         public DateTime DateLost { get; set; }

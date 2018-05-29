@@ -1,20 +1,15 @@
-﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Finder.Shared;
-using Microsoft.AspNet.Identity;
 
-namespace Finder.Repository
+namespace Finder.Shared
 {
     public interface IPetRepo
     {
-        Task<IEnumerable<Pet>> SearchPets();
-        Task<Pet> GetPet(int id);
-        Task<IEnumerable<PetSize>> GetPetSizes();
-        Task<IEnumerable<PetType>> GetPetTypes();
+        IEnumerable<Pet> SearchPets();
+        Pet GetPet(int id);
         int DeletePet(int id);
         int UpdatePet(Pet pet);
         int AddPet(Pet pet);
+        IEnumerable<Pet> GetPetSizes();
+        IEnumerable<Pet> GetPetTypes();
     }
 }
