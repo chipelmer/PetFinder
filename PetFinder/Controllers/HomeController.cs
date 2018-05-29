@@ -16,7 +16,7 @@ namespace PetFinder.Controllers
 
         public IActionResult About()
         {
-            ViewBag.Message = "Connecting lost pets and owners.";
+            //ViewBag.Message = "Don't just put up flyers.";
             return View();
         }
 
