@@ -1,4 +1,6 @@
-﻿@{
+﻿@using Finder.Repository;
+
+@{
     ViewBag.Title = "I lost my pet!";
 }
 
@@ -15,11 +17,12 @@
 </div>
 
 @{
-    List<SelectListItem> petTypes = new List<SelectListItem>();
-    var testList = Test.TestList();
-    for (int i = 0; i < testList.GetLength(0); i++)
+    var pr = new PetRepository(new System.Data.SqlClient.SqlConnection());
+    var petTypes = pr.GetPetTypes2();
+    var petTypesList = new List<SelectListItem>();
+    for (int i = 0; i < petTypes.Count(); i++)
     {
-        petTypes.Add(new SelectListItem { Text = testList[i, 0], Value = testList[i, 1] });
+        petTypesList.Add(new SelectListItem { Text = petTypes.ElementAt(i).Id.ToString(), Value = petTypes.ElementAt(i).Name });
     }
 }
 
@@ -30,7 +33,7 @@
     <tr>
         <td>What type of pet is lost?</td>
         <td>
-            @Html.DropDownList("Test", new SelectList(petTypes, "Value", "Text"))
+            @Html.DropDownList("Test", new SelectList(petTypesList, "Value", "Text"))
         </td>
     </tr>
     <tr>

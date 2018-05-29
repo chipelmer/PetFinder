@@ -1,16 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
-namespace Finder.Repository
+namespace Finder.Shared
 {
     public interface IPetRepo
     {
-        Task<IEnumerable<Pet>> SearchPets();
-        Task<Pet> GetPet(int id);
-        Task<IEnumerable<Pet>> GetPetSizes();
-        Task<IEnumerable<Pet>> GetPetTypes();
+        IEnumerable<Pet> SearchPets();
+        Pet GetPet(int id);
+        IEnumerable<Pet> GetPetSizes();
+        IEnumerable<Pet> GetPetTypes();
+        IEnumerable<PetSize> GetPetSizes2();
+        IEnumerable<PetType> GetPetTypes2();
         int DeletePet(int id);
         int UpdatePet(Pet pet);
         int AddPet(Pet pet);

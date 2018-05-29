@@ -1,12 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Finder.Repository
+namespace Finder.Shared
 {
     public class Pet
     {
         public int Id { get; set; }
+        public PetType Type2 { get; set; }
+        public PetSize Size2 { get; set; }
         public int Type { get; set; }
         public int TypeId { get; set; }
         public string Size { get; set; }
