@@ -52,6 +52,15 @@ namespace Finder.Repository
             }
         }
 
+        public int UpdatePet(Pet pet)
+        {
+            using (var conn = _conn)
+            {
+                conn.Open();
+                return conn.Execute("UPDATE lostpets SET PetType = @Type, PetSize = @Size, Location = @Location, PetDescription = @Description, DatePetLost = @DateLost, DatePetFound = @DateFound, LostNumber = @LostNumber, FoundNumber = @FoundNumber WHERE LostPet.Id = @Id;", pet);
+            }
+        }
+
         public IEnumerable<PetSize> GetPetSizes()
         {
             using (var conn = _conn)
@@ -67,15 +76,6 @@ namespace Finder.Repository
             {
                 conn.Open();
                 return conn.Query<PetType>("SELECT PetTypeId, PetType from pettypes;");
-            }
-        }
-
-        public int UpdatePet(Pet pet)
-        {
-            using (var conn = _conn)
-            {
-                conn.Open();
-                return conn.Execute("UPDATE lostpets SET PetType = @Type, PetSize = @Size, Location = @Location, PetDescription = @Description, DatePetLost = @DateLost, DatePetFound = @DateFound, LostNumber = @LostNumber, FoundNumber = @FoundNumber WHERE LostPet.Id = @Id;", pet);
             }
         }
     }

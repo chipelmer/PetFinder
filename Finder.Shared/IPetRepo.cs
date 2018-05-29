@@ -9,7 +9,7 @@ namespace Finder.Shared
         int DeletePet(int id);
         int UpdatePet(Pet pet);
         int AddPet(Pet pet);
-        IEnumerable<Pet> GetPetSizes();
-        IEnumerable<Pet> GetPetTypes();
+        IEnumerable<PetSize> GetPetSizes();
+        IEnumerable<PetType> GetPetTypes();
     }
 }
