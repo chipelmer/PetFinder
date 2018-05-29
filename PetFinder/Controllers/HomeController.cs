@@ -16,13 +16,13 @@ namespace PetFinder.Controllers
 
         public IActionResult About()
         {
-            //ViewBag.Message = "Don't just put up flyers.";
+            // ViewBag.Message = "Don't just put up flyers.";
             return View();
         }
 
         public IActionResult Contact()
         {
-            ViewBag.Message = "Don't call us, we'll call you.";
+            ViewBag.Message = "How can we help?";
             return View();
         }
 
