@@ -1,4 +1,6 @@
-﻿@{
+﻿@using Finder.Repository;
+
+@{
     ViewBag.Title = "I found someone's pet!";
 }
 
@@ -15,4 +17,64 @@
         <h4>Use this page to see if someone lost the pet you've found.</h4>
         <h4>If not, tell us about the pet you found in case someone comes looking later.</h4>
     </div>
+</div>
+
+@{
+    var pr = new PetRepository(new System.Data.SqlClient.SqlConnection());
+    var petTypes = pr.GetPetTypes();
+    var petTypesList = new List<SelectListItem>();
+    for (int i = 0; i < petTypes.Count(); i++)
+    {
+        petTypesList.Add(new SelectListItem { Text = petTypes.ElementAt(i).Id.ToString(), Value = petTypes.ElementAt(i).Name });
+    }
+}
+
+@{
+    var ps = new PetRepository(new System.Data.SqlClient.SqlConnection());
+    var petSizes = pr.GetPetSizes();
+    var petSizesList = new List<SelectListItem>();
+    for (int i = 0; i < petSizes.Count(); i++)
+    {
+        petSizesList.Add(new SelectListItem { Text = petSizes.ElementAt(i).Id.ToString(), Value = petSizes.ElementAt(i).Name });
+    }
+}
+
+<table>
+    <tr>
+        <th>Tell us about this pet:</th>
+    </tr>
+    <tr>
+        <td>What type of pet is it?</td>
+        <td>
+            @Html.DropDownList("Test", new SelectList(petTypes, "Value", "Text"))
+        </td>
+    </tr>
+    <tr>
+        <td>What size is the pet?</td>
+        <td>
+            @Html.DropDownList("Test", new SelectList(petSizes, "Value", "Text"))
+        </td>
+    </tr>
+    <tr>
+        <td valign="top">Describe the lost pet:</td>
+        <td>
+            @Html.TextArea("Enter description here")
+            <br />(expand text box as needed)
+        </td>
+    </tr>
+    <tr>
+        <td valign="top">Where was this pet?</td>
+        <td>
+            @Html.TextArea("Enter pet's location here")
+            <br />(expand text box as needed)
+        </td>
+    </tr>
+</table>
+
+<br />
+
+<div class="row header">
+    <a class="btn btn-default" href="~/home/find">
+        <h4>Post!</h4>
+    </a>
 </div>
