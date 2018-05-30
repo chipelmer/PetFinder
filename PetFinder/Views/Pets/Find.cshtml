@@ -1,4 +1,7 @@
-﻿@using Finder.Repository;
+﻿@using System.IO;
+@using Finder.Repository;
+@using Microsoft.Extensions.Configuration;
+@using MySql.Data.MySqlClient;
 
 @{
     ViewBag.Title = "I lost my pet!";
@@ -17,12 +20,20 @@
 </div>
 
 @{
-    var pr = new PetRepository(new System.Data.SqlClient.SqlConnection());
+    var pr = new PetRepository();
+
     var petTypes = pr.GetPetTypes();
     var petTypesList = new List<SelectListItem>();
     for (int i = 0; i < petTypes.Count(); i++)
     {
-        petTypesList.Add(new SelectListItem { Text = petTypes.ElementAt(i).Id.ToString(), Value = petTypes.ElementAt(i).Name });
+        petTypesList.Add(new SelectListItem { Value = petTypes.ElementAt(i).Id.ToString(), Text = petTypes.ElementAt(i).Name });
+    }
+
+    var petSizes = pr.GetPetSizes();
+    var petSizesList = new List<SelectListItem>();
+    for (int i = 0; i < petSizes.Count(); i++)
+    {
+        petSizesList.Add(new SelectListItem { Value = petSizes.ElementAt(i).Id.ToString(), Text = petSizes.ElementAt(i).Name });
     }
 }
 
@@ -39,7 +50,7 @@
     <tr>
         <td>What size is the lost pet?</td>
         <td>
-            @Html.DropDownList("Test", new SelectList(petTypes, "Value", "Text"))
+            @Html.DropDownList("Test", new SelectList(petSizesList, "Value", "Text"))
         </td>
     </tr>
 </table>

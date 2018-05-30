@@ -1,15 +1,32 @@
-﻿using System;
+﻿using System.IO;
 using System.Collections.Generic;
 using Dapper;
 using System.Data;
+using Microsoft.Extensions.Configuration;
 using System.Threading.Tasks;
 using Finder.Shared;
+using MySql.Data.MySqlClient;
 
 namespace Finder.Repository
 {
     public class PetRepository : IPetRepo
     {
         private readonly IDbConnection _conn;
+
+        public PetRepository()
+        {
+            string connStr = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+#if DEBUG
+        .AddJsonFile("appsettings.Development.json")
+#else
+        .AddJsonFile("appsettings.json")
+#endif
+        .Build()
+        .GetConnectionString("DefaultConnection");
+
+            _conn = new MySqlConnection(connStr);
+        }
 
         public PetRepository(IDbConnection conn)
         {
@@ -66,7 +83,7 @@ namespace Finder.Repository
             using (var conn = _conn)
             {
                 conn.Open();
-                return conn.Query<PetSize>("SELECT PetSizeId, PetSize FROM petsizes;");
+                return conn.Query<PetSize>("SELECT PetSizesId AS Id, PetSize AS Name FROM petsizes;");
             }
         }
 
@@ -75,7 +92,7 @@ namespace Finder.Repository
             using (var conn = _conn)
             {
                 conn.Open();
-                return conn.Query<PetType>("SELECT PetTypeId, PetType FROM pettypes;");
+                return conn.Query<PetType>("SELECT petTypesID AS Id, petType AS Name FROM pettypes;");
             }
         }
     }
