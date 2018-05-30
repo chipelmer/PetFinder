@@ -1,4 +1,3 @@
-﻿
 namespace Finder.Shared
 {
     public class PetSize

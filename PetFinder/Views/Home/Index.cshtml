@@ -1,10 +1,32 @@
-﻿@{
+﻿<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lobster:300,400,600,700&amp;lang=en" />
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&amp;lang=en" />
+
+<style type="text/css">
+
+    h1 {
+        font-family: "Lobster";
+    }
+
+    h2 {
+        font-family: "Lobster";
+    }
+
+    h3 {
+        font-family: "Lobster";
+    }
+
+    h4 {
+        font-family: "Open Sans";
+    }
+</style>
+
+@{
     ViewBag.Title = "Home Page";
 }
 
 <div class="row">
     <div class="header">
-        <img src="~/images/Dog1.svg" width="150"/>
+        <img src="~/images/Dog1.svg" width="150" />
         <h2>Where's my pet?</h2>
         <a class="btn btn-default" href="~/pets/find">
             Find it!
@@ -26,13 +48,13 @@
         <div class="col-md-6">
             <h3>What is this?</h3>
             <p>
-                This is a tool for connecting pet owners that have lost their pets with the kind folks that have temporarily taken the lost pet under their wing.
+                <h4>This is a tool for connecting pet owners that have lost their pets with the kind folks that have temporarily taken the lost pet under their wing.</h4>
             </p>
         </div>
         <div class="col-md-6">
             <h3>How do I use this?</h3>
             <p>
-                Simply choose the appropriate option above to begin locating your lost pet or posting about a pet that you've found.
+                <h4>Simply choose the appropriate option above to begin locating your lost pet or posting about a pet that you've found.</h4>
             </p>
         </div>
     </div>
