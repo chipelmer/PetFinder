@@ -44,6 +44,16 @@
     }
 }
 
+@{
+    var ps = new PetRepository(new System.Data.SqlClient.SqlConnection());
+    var petSizes = pr.GetPetSizes();
+    var petSizesList = new List<SelectListItem>();
+    for (int i = 0; i < petSizes.Count(); i++)
+    {
+        petSizesList.Add(new SelectListItem { Text = petSizes.ElementAt(i).Id.ToString(), Value = petSizes.ElementAt(i).Name });
+    }
+}
+
 <table>
     <tr>
         <th>Tell us about your lost pet:</th>
@@ -57,7 +67,7 @@
     <tr>
         <td>What size is the lost pet?</td>
         <td>
-            @Html.DropDownList("Test", new SelectList(petTypes, "Value", "Text"))
+            @Html.DropDownList("Test", new SelectList(petSizesList, "Value", "Text"))
         </td>
     </tr>
 </table>
