@@ -4,7 +4,7 @@ namespace Finder.Shared
 {
     public interface IPetRepo
     {
-        IEnumerable<Pet> SearchPets();
+        IEnumerable<Pet> SearchPets(Pet pet);
         Pet GetPet(int id);
         int DeletePet(int id);
         int UpdatePet(Pet pet);

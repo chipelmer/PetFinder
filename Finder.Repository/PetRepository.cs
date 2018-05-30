@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using Dapper;
 using System.Data;
@@ -6,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using System.Threading.Tasks;
 using Finder.Shared;
 using MySql.Data.MySqlClient;
+using System.Data.SqlClient;
 
 namespace Finder.Repository
 {
@@ -37,8 +39,22 @@ namespace Finder.Repository
         {
             using (var conn = _conn)
             {
+                var con = (MySqlConnection)conn;
                 conn.Open();
-                return conn.Execute("INSERT INTO lostpets (HashedWord, PetDescription, Picture, DateLost, FinderContactNumber, DateFound, Type, PetSize) VALUES (@HashedWord, @Description, @DateLost, @FindNumber, @DateFound, @Type, @Size);", pet);
+
+                var cmd = new MySqlCommand(
+                    "INSERT INTO lostpets (dateLost, loserContactNumber, dateFound, foundLocation, finderContactNumber, petSizesID, petTypesID) " +
+                    "VALUES (@dL, @lL, @lCN, @dF, @fL, @fCN, @pSID, @pTID);"
+                    , con);
+                cmd.Parameters.AddWithValue("dL", pet.DateLost);
+                cmd.Parameters.AddWithValue("lCN", pet.LostNumber);
+                cmd.Parameters.AddWithValue("dF", pet.DateFound);
+                cmd.Parameters.AddWithValue("fL", pet.Location);
+                cmd.Parameters.AddWithValue("fCN", pet.FoundNumber);
+                cmd.Parameters.AddWithValue("pSID", pet.Size.Id);
+                cmd.Parameters.AddWithValue("pTID", pet.Type.Id);
+
+                return cmd.ExecuteNonQuery();
             }
         }
 
@@ -47,7 +63,7 @@ namespace Finder.Repository
             using (var conn = _conn)
             {
                 conn.Open();
-                return conn.Execute("DELETE FROM lostpets WHERE lostpets.Id = @id;", new { id });
+                return conn.Execute("DELETE FROM lostpets WHERE lostPetsID = @id;", new { id });
             }
         }
 
@@ -55,26 +71,87 @@ namespace Finder.Repository
         {
             using (var conn = _conn)
             {
+                var con = (MySqlConnection)conn;
                 conn.Open();
-                return conn.QueryFirst<Pet>("SELECT * FROM lostpets lp LEFT OUTER JOIN petsize ps ON lp.Id = ps.Id LEFT OUTER JOIN pettype pt ON pt.Id = lp.ID WHERE lp.Id = @id;", new { id });
+
+                var cmd = new MySqlCommand(
+                    "SELECT * FROM lostpets lp " +
+                    "LEFT JOIN petsizes ps ON lp.petSizesId = ps.PetSizesId " +
+                    "LEFT JOIN pettypes pt ON pt.petTypesId = lp.PetTypesID " +
+                    "WHERE lp.lostPetsId=@lPID;"
+                    , con);
+                cmd.Parameters.AddWithValue("lPID", id);
+
+                using (var myReader = cmd.ExecuteReader())
+                {
+                    while (myReader.Read())
+                    {
+                        DateTime? dateLost = null;
+                        DateTime? dateFound = null;
+
+                        if (DateTime.TryParse(myReader["dateLost"].ToString(), out var dl)) { dateLost = dl; }
+                        if (DateTime.TryParse(myReader["dateFound"].ToString(), out var df)) { dateFound = df; }
+
+                        return new Pet
+                        {
+                            Id = (int)myReader["lostPetsID"],
+                            Description = myReader["petDescription"].ToString(),
+                            Size = new PetSize { Id = (int)myReader["petSizesID"], Name = myReader["petSize"].ToString() },
+                            Type = new PetType { Id = (int)myReader["petTypesID"], Name = myReader["petType"].ToString() },
+                            Location = myReader["foundLocation"].ToString(),
+                            DateLost = dateLost,
+                            FoundNumber = myReader["finderContactNumber"].ToString(),
+                            DateFound = dateFound,
+                            LostNumber = myReader["loserContactNumber"].ToString()
+                        });
+                    }
+                }
+                return null;
             }
         }
 
-        public IEnumerable<Pet> SearchPets()
+        public IEnumerable<Pet> SearchPets(Pet pet)
         {
             using (var conn = _conn)
             {
+                var con = (MySqlConnection)conn;
                 conn.Open();
-                return conn.Query<Pet>("SELECT * FROM lostpets lp LEFT OUTER JOIN petsize ps ON lp.PetSizesId = ps.PetSizesId LEFT OUTER JOIN pettype pt ON pt.PetTypeId = lp.PetTypeID;");
-            }
-        }
 
-        public int UpdatePet(Pet pet)
-        {
-            using (var conn = _conn)
-            {
-                conn.Open();
-                return conn.Execute("UPDATE lostpets SET PetType = @Type, PetSize = @Size, Location = @Location, PetDescription = @Description, DatePetLost = @DateLost, DatePetFound = @DateFound, LostNumber = @LostNumber, FoundNumber = @FoundNumber WHERE LostPet.Id = @Id;", pet);
+                var cmd = new MySqlCommand(
+                    "SELECT * FROM lostpets lp " +
+                    "LEFT JOIN petsizes ps ON lp.petSizesId = ps.PetSizesId " +
+                    "LEFT JOIN pettypes pt ON pt.petTypesId = lp.PetTypesID " +
+                    "WHERE ps.petSizesId=@SizeId AND pt.petTypesId=@TypeId;"
+                    , con);
+                cmd.Parameters.AddWithValue("SizeId", pet.Size.Id);
+                cmd.Parameters.AddWithValue("TypeId", pet.Type.Id);
+
+                var pets = new List<Pet>();
+                using (var myReader = cmd.ExecuteReader())
+                {
+                    while (myReader.Read())
+                    {
+                        DateTime? dateLost = null;
+                        DateTime? dateFound = null;
+
+                        if (DateTime.TryParse(myReader["dateLost"].ToString(), out var dl)) { dateLost = dl; }
+                        if (DateTime.TryParse(myReader["dateFound"].ToString(), out var df)) { dateFound = df; }
+
+                        pets.Add(new Pet
+                        {
+                            Id = (int)myReader["lostPetsID"],
+                            Description = myReader["petDescription"].ToString(),
+                            Size = new PetSize { Id = (int)myReader["petSizesID"], Name = myReader["petSize"].ToString() },
+                            Type = new PetType { Id = (int)myReader["petTypesID"], Name = myReader["petType"].ToString() },
+                            Location = myReader["foundLocation"].ToString(),
+                            DateLost = dateLost,
+                            FoundNumber = myReader["finderContactNumber"].ToString(),
+                            DateFound = dateFound,
+                            LostNumber = myReader["loserContactNumber"].ToString()
+                        });
+                    }
+                }
+                return pets;
             }
         }
 
