@@ -20,7 +20,7 @@
 </div>
 
 @{
-    var pr = new PetRepository(new System.Data.SqlClient.SqlConnection());
+    var pr = new PetRepository();
     var petTypes = pr.GetPetTypes();
     var petTypesList = new List<SelectListItem>();
     for (int i = 0; i < petTypes.Count(); i++)

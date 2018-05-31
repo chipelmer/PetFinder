@@ -46,13 +46,13 @@ namespace Finder.Repository
                     "INSERT INTO lostpets (dateLost, loserContactNumber, dateFound, foundLocation, finderContactNumber, petSizesID, petTypesID) " +
                     "VALUES (@dL, @lL, @lCN, @dF, @fL, @fCN, @pSID, @pTID);"
                     , con);
-                cmd.Parameters.AddWithValue("dL", pet.DateLost);
-                cmd.Parameters.AddWithValue("lCN", pet.LostNumber);
-                cmd.Parameters.AddWithValue("dF", pet.DateFound);
-                cmd.Parameters.AddWithValue("fL", pet.Location);
-                cmd.Parameters.AddWithValue("fCN", pet.FoundNumber);
-                cmd.Parameters.AddWithValue("pSID", pet.Size.Id);
-                cmd.Parameters.AddWithValue("pTID", pet.Type.Id);
+                cmd.Parameters.AddWithValue("@dL", pet.DateLost);
+                cmd.Parameters.AddWithValue("@lCN", pet.LostNumber);
+                cmd.Parameters.AddWithValue("@dF", pet.DateFound);
+                cmd.Parameters.AddWithValue("@fL", pet.Location);
+                cmd.Parameters.AddWithValue("@fCN", pet.FoundNumber);
+                cmd.Parameters.AddWithValue("@pSID", pet.Size.Id);
+                cmd.Parameters.AddWithValue("@pTID", pet.Type.Id);
 
                 return cmd.ExecuteNonQuery();
             }
@@ -80,7 +80,7 @@ namespace Finder.Repository
                     "LEFT JOIN pettypes pt ON pt.petTypesId = lp.PetTypesID " +
                     "WHERE lp.lostPetsId=@lPID;"
                     , con);
-                cmd.Parameters.AddWithValue("lPID", id);
+                cmd.Parameters.AddWithValue("@lPID", id);
 
                 using (var myReader = cmd.ExecuteReader())
                 {
@@ -103,7 +103,7 @@ namespace Finder.Repository
                             FoundNumber = myReader["finderContactNumber"].ToString(),
                             DateFound = dateFound,
                             LostNumber = myReader["loserContactNumber"].ToString()
-                        });
+                        };
                     }
                 }
                 return null;
@@ -123,8 +123,8 @@ namespace Finder.Repository
                     "LEFT JOIN pettypes pt ON pt.petTypesId = lp.PetTypesID " +
                     "WHERE ps.petSizesId=@SizeId AND pt.petTypesId=@TypeId;"
                     , con);
-                cmd.Parameters.AddWithValue("SizeId", pet.Size.Id);
-                cmd.Parameters.AddWithValue("TypeId", pet.Type.Id);
+                cmd.Parameters.AddWithValue("@SizeId", pet.Size.Id);
+                cmd.Parameters.AddWithValue("@TypeId", pet.Type.Id);
 
                 var pets = new List<Pet>();
                 using (var myReader = cmd.ExecuteReader())
